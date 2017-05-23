@@ -8,7 +8,7 @@ class simpledb {
 	private $validate;
 	
 	public function __construct($dbconfig,$sanitize,$validate)
-												{
+	{
 		$this->dbconfig=$dbconfig;
 		$this->sanitize=$sanitize;
 		$this->validate=$validate;
@@ -20,16 +20,16 @@ class simpledb {
 	}
 	
 	public function printRows($rows)
-			                                	{
+	{
 		echo '<table border=1>';
 		
 		if(is_array($rows) && count($rows)) {
 			$r=array_values($rows);
 			
 			if(isset($r[0]))
-											$columns=array_keys($r[0]);
+				$columns=array_keys($r[0]);
 			else if($r!==null)
-											$columns=array_keys($r);
+				$columns=array_keys($r);
 			
 			echo '<tr>';
 			foreach($columns as $column) {
@@ -49,31 +49,16 @@ class simpledb {
 		echo '</table>';
 	}
 	
-	/*
-	public function printCount($count)
-												{
-		echo '<table border=1>';
-		
-		echo '<tr>';
-		echo '<th>Count</th>';
-		echo '</tr>';
-		
-		echo '<tr>';
-		echo '<td>'.$count . '</td>';
-		echo '</tr>';
-		
-		echo '</table>';
-	}*/
-	
 	public function sanitize(array $datums,array $types): array
-								{
+	{
 		if(count($datums)==0 || count($datums)!=count($types)) {
 			return $datums;
 		}
 		
 		foreach($types as $index=>$type) {
 			$value=$datums[$index];
-			if(!$this->validate->byType($type,$value))																					          {
+			if(!$this->validate->byType($type,$value))																			
+            {
 				$datums[$index]="";
 			}
 			else {
@@ -85,7 +70,7 @@ class simpledb {
 	}
 	
 	public function query(string $sql, array $prepared=[], array $types=[]): array
-												{
+	{
 		if(count($prepared)>0) {
 			$prepared=$this->sanitize($prepared,$types);
 		}
@@ -98,7 +83,7 @@ class simpledb {
 			$rows = $result->fetchAll(PDO::FETCH_ASSOC);
 		}
 		catch(PDOException $ex) {
-			echo "An Error occured!".$ex->getMessage();
+			echo "PDO query error: ".$ex->getMessage()."<br>";
 			// 			exit;
 		}
 		
@@ -107,7 +92,7 @@ class simpledb {
 	
 	
 	public function exec(string $sql, array $prepared=[], array $types=[]): array
-												{
+	{
 		if(count($prepared)>0) {
 			$prepared=$this->sanitize($prepared,$types);
 		}
@@ -123,7 +108,7 @@ class simpledb {
             $ret['rowCount'] = $result->rowCount();
 		}
 		catch(PDOException $ex) {
-			echo "An Error occured!".$ex->getMessage();
+			echo "PDO exec error: ".$ex->getMessage()."<br>";
 			// 			exit;
 		}
 	
