@@ -55,8 +55,9 @@ $datums=[
 [4,'sdfsdfdsf','sdfsdfsdf','lasellers@gmail.com'],
 [5,'','',''],
 [6,'6','6','6'],
-[7,'<script>alert("7");</script>','<script>alert("7");</script>','<script>alert("7");</script>'],
+[7,'<script>alert("injection 7 name");</script>','<script>alert("injection 7 phone");</script>','<script>alert("injection 7 email");</script>'],
 [8,'888','888','888'],
+['<script>alert("injection 7 id");</script>','<script>alert("injection 7 id");</script>','<script>alert("injection 7 phone");</script>','<script>alert("injection 7 email");</script>'],
 
 ];
 
@@ -64,7 +65,6 @@ $customersTypes=['integer','string','phone','email'];
 
 foreach($datums as $datum) {
 	list($id,$name,$phone,$email)=$datum;
-	//v	ar_dump($datum);
 	$rows=$db->exec('insert into customers (id,name,phone,email) values (?,?,?,?);',[$id,$name,$phone,$email],$customersTypes);
 	$db->printRows($rows);
 }
